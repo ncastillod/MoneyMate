@@ -1,0 +1,98 @@
+<app-header title="Inicio"></app-header>
+
+<ion-content>
+  <div>
+    <ion-fab vertical="bottom" horizontal="end" slot="fixed">
+      <ion-fab-button>
+        <ion-icon name="add"></ion-icon>
+      </ion-fab-button>
+    </ion-fab>
+  </div>
+
+
+  <br>
+  <br>
+
+
+  <ion-title class="ion-text-center">
+    MoneyMate
+  </ion-title>
+
+  <ion-grid>
+    <ion-row class="ion-justify-content-center">
+      <ion-col size="12" class="ion-text-center">
+        <p>Presupuesto: $ 160.000</p>
+      </ion-col>
+    </ion-row>
+
+    <ion-row class="ion-justify-content-center">
+      <ion-col size="12" class="ion-text-center">
+        <ion-icon name="settings-outline" size="large"></ion-icon>
+      </ion-col>
+    </ion-row>
+
+    <ion-row>
+      <ion-col size="12">
+        <ion-button expand="block" color="warning">Añadir un Gasto</ion-button>
+      </ion-col>
+    </ion-row>
+
+    <ion-row>
+      <ion-col size="12">
+        <ion-button expand="block" color="success">Añadir un Ingreso</ion-button>
+      </ion-col>
+    </ion-row>
+
+    <ion-row>
+      <ion-col size="12">
+        <ion-button expand="block" color="tertiary">Resumen</ion-button>
+      </ion-col>
+    </ion-row>
+
+    <ion-row>
+      <ion-col size="12">
+        <ion-card>
+          <ion-card-content class="ion-text-center">
+            <p>Gastos de este mes</p>
+            <h2>$ 75.490</h2>
+          </ion-card-content>
+        </ion-card>
+      </ion-col>
+    </ion-row>
+
+    <ion-row>
+      <ion-col size="12">
+        <ion-card>
+          <ion-card-content class="ion-text-center" color="success">
+            <p>Meta de Ahorro</p>
+            <h2>$ 15.000</h2>
+          </ion-card-content>
+        </ion-card>
+      </ion-col>
+    </ion-row>
+  </ion-grid>
+
+
+
+
+  <div>
+
+
+
+
+
+    <ion-button routerLink="gastos">
+      Ingresar gastos
+    </ion-button>
+
+
+    <ion-button (click)="signOut()">
+      Cerrar Sesion
+    </ion-button>
+
+
+  </div>
+
+
+
+</ion-content>
