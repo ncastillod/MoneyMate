@@ -1,21 +1,33 @@
-<app-header title="Añadir Gasto" backButton="/main/home"></app-header>
+<app-header title="Resumen de Gastos Mensual" backButton="/main/home"></app-header>
 <ion-content>
   <!-- Título con la suma de todos los gastos del mes actual -->
-  <ion-item lines="none" class="total-gastos-mes">
-    <ion-label>
-      <h2>Total de gastos del mes actual: {{ totalGastosMes | currency: 'CLP' }}</h2>
-    </ion-label>
-  </ion-item>
+  
+  <ion-card>
+    <ion-card-header>
+      <ion-card-title>Total de gastos del mes actual</ion-card-title>
+      <ion-card-subtitle>Gastos mes anterior: {{ totalGastosMesAnterior | currency: 'CLP' }}</ion-card-subtitle>
+      <ion-card-content>
+        <h1>{{ totalGastosMes | currency: 'CLP' }}</h1>
+      </ion-card-content>
+    </ion-card-header>
+  </ion-card>
+  
 
-  <!-- Lista de totales por tipo de gasto -->
-  <ion-list>
-    <ion-item lines="none" *ngFor="let categoria of getCategorias()">
-      <ion-label>
-        <strong>{{ categoria }}</strong>
-        <p>Total: {{ totalPorCategoria[categoria] | currency: 'CLP' }}</p>
-      </ion-label>
-    </ion-item>
-  </ion-list>
+
+  <ion-card>
+    <ion-card-header>
+      <ion-card-title>Totales por tipo de gasto</ion-card-title>
+    </ion-card-header>
+    <ion-card-content>
+      <p>Vivienda: {{ totalVivienda | currency: 'CLP' }}</p>
+      <p>Alimentación: {{ totalAlimentacion | currency: 'CLP' }}</p>
+      <p>Servicios: {{ totalServicios | currency: 'CLP' }}</p>
+      <p>Transporte: {{ totalTransporte | currency: 'CLP' }}</p>
+      <p>Otros: {{ totalOtros | currency: 'CLP' }}</p>
+    </ion-card-content>
+  </ion-card>
+
+   
 
   <!-- Lista de gastos detallados -->
   <ion-list>

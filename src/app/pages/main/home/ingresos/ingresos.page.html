@@ -1,0 +1,44 @@
+<app-header title="Añadir Ingresos" backButton="/main/home"></app-header>
+<ion-content>
+    <br>
+    <br>
+
+    <ion-title class="ion-text-center">
+        MoneyMate
+      </ion-title>
+    
+      <ion-grid>
+        <ion-row class="ion-justify-content-center">
+          <ion-col size="12" class="ion-text-center">
+            <p>+ Ingresos</p>
+          </ion-col>
+        </ion-row>
+    
+    
+    
+      </ion-grid>
+
+
+    <form [formGroup]="form" class="ion-padding ion-text-center" (ngSubmit)="submit()" (keypress.enter)="submit()">
+        <!--=================== Descripcion =======================-->
+        <app-custom-input 
+            autocomplete="descripcion" 
+            icon="journal"
+            [control]="form.controls.monto"
+            type="number"
+            label="Monto"
+        ></app-custom-input>
+
+        <div class="validators" *ngIf="form.controls.monto.errors && form.controls.monto.touched">
+            <div *ngIf="form.controls.monto.errors?.['required']">Este campo es requerido</div>
+            <div *ngIf="form.controls.monto.errors?.['minlength']">El campo debe tener al menos 3 caracteres</div>
+        </div>
+
+        
+
+        <ion-button class="ion-margin" mode="md" type="submit" color="dark" routerLink="/main/home" [disabled]="form.invalid">
+            Agregar Ingreso
+            <ion-icon slot="end" name="checkmark-circle-outline"></ion-icon>
+        </ion-button>
+    </form>
+</ion-content>
