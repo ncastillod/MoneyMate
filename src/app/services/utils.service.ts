@@ -56,4 +56,8 @@ export class UtilsService {
   dismissModal(data?: any) {
     return this.modalCtrl.dismiss(data);
   }
+
+
+
+  
 }

@@ -1,0 +1,49 @@
+<app-header title="Añadir Gasto" backButton="/main/home"></app-header>
+<ion-content>
+  <!-- Título con la suma de todos los gastos del mes actual -->
+  <ion-item lines="none" class="total-gastos-mes">
+    <ion-label>
+      <h2>Total de gastos del mes actual: {{ totalGastosMes | currency: 'CLP' }}</h2>
+    </ion-label>
+  </ion-item>
+
+  <!-- Lista de totales por tipo de gasto -->
+  <ion-list>
+    <ion-item lines="none" *ngFor="let categoria of getCategorias()">
+      <ion-label>
+        <strong>{{ categoria }}</strong>
+        <p>Total: {{ totalPorCategoria[categoria] | currency: 'CLP' }}</p>
+      </ion-label>
+    </ion-item>
+  </ion-list>
+
+  <!-- Lista de gastos detallados -->
+  <ion-list>
+    <ion-item-sliding class="product-item" *ngFor="let p of resumen">
+      <ion-item lines="none">
+        <ion-label class="ion-text-wrap">
+          <div class="name">{{p.descripcion}}</div>
+          <div class="data">
+            <strong>Mes: </strong> {{ getMonth(p.fecha) }}
+          </div>
+          <div class="data">
+            <strong>Tipo: </strong> {{p.categoria}}
+          </div>
+        </ion-label>
+        <div slot="end" class="total-monto">
+          <strong>Total: </strong> {{p.monto | currency: 'CLP'}}
+        </div>
+      </ion-item>
+
+      <ion-item-options>
+        <ion-item-option>
+          <ion-icon class="option-btn" name="create-outline"></ion-icon>
+        </ion-item-option>
+  
+        <ion-item-option color="danger">
+          <ion-icon class="option-btn" name="trash-outline"></ion-icon>
+        </ion-item-option>
+      </ion-item-options>
+    </ion-item-sliding>
+  </ion-list>
+</ion-content>

@@ -3,8 +3,9 @@ import { AngularFireAuth } from '@angular/fire/compat/auth';
 import { getAuth, signInWithEmailAndPassword, createUserWithEmailAndPassword, updateProfile, sendPasswordResetEmail } from 'firebase/auth';
 import { User } from '../models/user.model';
 import { AngularFirestore } from '@angular/fire/compat/firestore';
-import { getFirestore, setDoc, doc, getDoc, addDoc, collection } from '@angular/fire/firestore';
+import { getFirestore, setDoc, doc, getDoc, addDoc, collection, collectionData, query } from '@angular/fire/firestore';
 import { UtilsService } from './utils.service';
+import { DocumentData } from '@angular/fire/firestore';
 
 import { Gasto } from '../models/gastos.model';
 import { Observable } from 'rxjs';
@@ -76,6 +77,14 @@ export class FirebaseService {
 
   //===================== BASE DE DATOS ======================
 
+
+  //===== Obtener documentos de una colección ==========
+
+  getCollectionData(path: string, collectionQuery?: any): Observable<DocumentData[]>{
+    const ref = collection(getFirestore(), path);
+    return collectionData(query(ref,collectionQuery),{idField: 'id'});
+  }
+
   //===== Setear un documento ==========
 
   setDocument(path: string, data: any) {
@@ -94,6 +103,8 @@ export class FirebaseService {
   addDocument(path: string, data: any) {
     return addDoc(collection(getFirestore(), path), data);
   }
+
+
 
 
 

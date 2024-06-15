@@ -10,6 +10,7 @@ import { HomePage } from './home.page';
 import { SharedModule } from 'src/app/shared/shared.module';
 
 import { ReactiveFormsModule } from '@angular/forms';
+import { ResumenService } from 'src/app/services/resumen.service';
 
 @NgModule({
   imports: [
@@ -18,7 +19,10 @@ import { ReactiveFormsModule } from '@angular/forms';
     IonicModule,
     HomePageRoutingModule,
     SharedModule,
-    ReactiveFormsModule
+    ReactiveFormsModule,
+  ],
+  providers: [
+    ResumenService
   ],
   declarations: [HomePage]
 })

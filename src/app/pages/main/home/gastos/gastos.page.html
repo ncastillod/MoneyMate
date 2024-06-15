@@ -1,5 +1,24 @@
-<app-header title="Añadir Gasto"></app-header>
+<app-header title="Añadir Gasto" backButton="/main/home"></app-header>
 <ion-content>
+    <br>
+    <br>
+
+    <ion-title class="ion-text-center">
+        MoneyMate
+      </ion-title>
+    
+      <ion-grid>
+        <ion-row class="ion-justify-content-center">
+          <ion-col size="12" class="ion-text-center">
+            <p>+ Gastos</p>
+          </ion-col>
+        </ion-row>
+    
+    
+    
+      </ion-grid>
+
+
     <form [formGroup]="form" class="ion-padding ion-text-center" (ngSubmit)="submit()" (keypress.enter)="submit()">
         <!--=================== Descripcion =======================-->
         <app-custom-input 
@@ -17,12 +36,12 @@
 
         <!--=================== Categoría =======================-->
         <ion-item>
-            <ion-select formControlName="categoria" label="Categoría" label-placement="floating">
-                <ion-select-option value="vivienda">Vivienda</ion-select-option>
-                <ion-select-option value="alimentacion">Alimentacion</ion-select-option>
-                <ion-select-option value="servicios">Servicios</ion-select-option>
-                <ion-select-option value="transporte">Transporte</ion-select-option>
-                <ion-select-option value="otros">Otros</ion-select-option>
+            <ion-select formControlName="categoria" label="Categoría" interface="popover" label-placement="floating">
+                <ion-select-option value="Vivienda">Vivienda</ion-select-option>
+                <ion-select-option value="Alimentacion">Alimentacion</ion-select-option>
+                <ion-select-option value="Servicios">Servicios</ion-select-option>
+                <ion-select-option value="Transporte">Transporte</ion-select-option>
+                <ion-select-option value="Otros">Otros</ion-select-option>
             </ion-select>
         </ion-item>
 
@@ -39,11 +58,11 @@
         ></app-custom-input>
 
         <div class="validators" *ngIf="form.controls.monto.errors && form.controls.monto.touched">
-            <div *ngIf="form.controls.monto.errors?.['required']">El correo es requerido</div>
-            <div *ngIf="form.controls.monto.errors?.['min']">El monto debe ser mayor o igual a 0</div>
+            <div *ngIf="form.controls.monto.errors?.['required']">El monto es requerido</div>
+            <div *ngIf="form.controls.monto.errors?.['min']">El monto debe ser mayor a 0</div>
         </div>
 
-        <ion-button class="ion-margin" mode="md" type="submit" [disabled]="form.invalid">
+        <ion-button class="ion-margin" mode="md" type="submit" color="dark" routerLink="/main/home" [disabled]="form.invalid">
             Agregar Gasto
             <ion-icon slot="end" name="checkmark-circle-outline"></ion-icon>
         </ion-button>

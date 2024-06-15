@@ -36,7 +36,7 @@ export class AddUpdateGastoComponent implements OnInit {
 
   async submit() {
     if (this.form.valid) {
-      const path = `users/${this.user.uid}/gastos`;
+      let path = `users/${this.user.uid}/gastos`;
 
       const loading = await this.utilsSvc.loading();
       await loading.present();

@@ -1,13 +1,50 @@
-<ion-header [translucent]="true">
-  <ion-toolbar>
-    <ion-title>profile</ion-title>
-  </ion-toolbar>
-</ion-header>
+<app-header title="Perfil" backButton="/main/home"></app-header>
 
-<ion-content [fullscreen]="true">
-  <ion-header collapse="condense">
-    <ion-toolbar>
-      <ion-title size="large">profile</ion-title>
-    </ion-toolbar>
-  </ion-header>
+<ion-content>
+  
+  <br>
+  <br>
+
+  <ion-title class="ion-text-center">
+    MoneyMate
+  </ion-title>
+
+  <ion-grid>
+    <ion-row class="ion-justify-content-center">
+      <ion-col size="12" class="ion-text-center">
+        <p>Configuración</p>
+      </ion-col>
+    </ion-row>
+
+
+
+  </ion-grid>
+
+  <form  [formGroup]="form" class="ion-padding ion-text-center" (ngSubmit)="submit()" (keypress.enter)="submit()">
+
+
+    <app-custom-input 
+            icon="logo-usd"
+            [control]="form.controls.monto"
+            type="number"
+            label="Ingreso Fijo"
+        ></app-custom-input>
+
+        <div class="validators" *ngIf="form.controls.monto.errors && form.controls.monto.touched">
+            <div *ngIf="form.controls.monto.errors?.['required']">El monto es requerido</div>
+            <div *ngIf="form.controls.monto.errors?.['min']">El monto debe ser mayor a 0</div>
+        </div>
+
+        <ion-button class="ion-margin" mode="md" type="submit" color="dark" routerLink="/main/home" [disabled]="form.invalid">
+            Agregar Gasto
+            <ion-icon slot="end" name="checkmark-circle-outline"></ion-icon>
+        </ion-button>
+
+
+  </form>
+
+
+
+
+
 </ion-content>
