@@ -21,6 +21,8 @@ export class HomePage implements OnInit {
   
 
   totalGastosMes: number = 0;
+  ingresos: any[] = [];
+  presupuesto: number = 0;
 
   constructor(private resumenService: ResumenService) { }
 
@@ -28,9 +30,22 @@ export class HomePage implements OnInit {
 
   ngOnInit() {
     this.getGastos();
+    this.getIngresos();
   }
 
- 
+ // Obtener ingresos desde Firebase
+ getIngresos() {
+  const user = this.utilsSvc.getFromLocalStorage('user');
+  if (user) {
+    this.firebaseSvc.getIngresos(user.uid).subscribe({
+      next: (res: any[]) => {
+        console.log(res);
+        this.ingresos = res;
+        this.presupuesto = res.reduce((acc, ingreso) => acc + Number(ingreso.monto), 0);
+      }
+    });
+  }
+}
 
   //======= Cerrar Sesion =====
   signOut(){

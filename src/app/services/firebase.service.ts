@@ -23,6 +23,11 @@ export class FirebaseService {
 
   private gastosCollection = this.firestore.collection<Gasto>('gastos');
   
+   // Método para obtener ingresos
+   getIngresos(userUid: string): Observable<DocumentData[]> {
+    const path = `users/${userUid}/ingresos`;
+    return this.getCollectionData(path);
+  }
 
 
 
