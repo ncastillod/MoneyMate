@@ -1,11 +1,10 @@
-import { Component, OnInit, inject } from '@angular/core';
+import { Component, OnInit } from '@angular/core';
 import { FirebaseService } from 'src/app/services/firebase.service';
 import { UtilsService } from 'src/app/services/utils.service';
-import { RouterLink } from '@angular/router';
 import { ResumenService } from 'src/app/services/resumen.service';
 import { AddUpdateGastoComponent } from 'src/app/shared/components/add-update-gasto/add-update-gasto.component';
-import { User } from 'src/app/models/user.model';
 import { Gasto } from 'src/app/models/gastos.model';
+import { ModalController } from '@ionic/angular';
 
 @Component({
   selector: 'app-home',
@@ -13,51 +12,48 @@ import { Gasto } from 'src/app/models/gastos.model';
   styleUrls: ['./home.page.scss'],
 })
 export class HomePage implements OnInit {
-
-  
-
-  firebaseSvc = inject(FirebaseService);
-  utilsSvc = inject(UtilsService);
-  
-
   totalGastosMes: number = 0;
   ingresos: any[] = [];
   presupuesto: number = 0;
 
-  constructor(private resumenService: ResumenService) { }
-
-  
+  constructor(
+    private firebaseSvc: FirebaseService,
+    private utilsSvc: UtilsService,
+    private resumenService: ResumenService,
+    private modalController: ModalController
+  ) {}
 
   ngOnInit() {
     this.getGastos();
     this.getIngresos();
   }
 
- // Obtener ingresos desde Firebase
- getIngresos() {
-  const user = this.utilsSvc.getFromLocalStorage('user');
-  if (user) {
-    this.firebaseSvc.getIngresos(user.uid).subscribe({
-      next: (res: any[]) => {
-        console.log(res);
-        this.ingresos = res;
-        this.presupuesto = res.reduce((acc, ingreso) => acc + Number(ingreso.monto), 0);
-      }
-    });
+  // Obtener ingresos desde Firebase
+  getIngresos() {
+    const user = this.utilsSvc.getFromLocalStorage('user');
+    if (user) {
+      this.firebaseSvc.getIngresos(user.uid).subscribe({
+        next: (res: any[]) => {
+          console.log(res);
+          this.ingresos = res;
+          this.presupuesto = res.reduce((acc, ingreso) => acc + Number(ingreso.monto), 0);
+        }
+      });
+    }
   }
-}
 
-  //======= Cerrar Sesion =====
-  signOut(){
+  // Cerrar Sesión
+  signOut() {
     this.firebaseSvc.signOut();
   }
 
-  //======= Añadir Gasto =====
-  addGasto(){
-    this.utilsSvc.presentModal({
+  // Añadir Gasto
+  async addGasto() {
+    const modal = await this.modalController.create({
       component: AddUpdateGastoComponent,
       cssClass: 'add-update-modal'
     });
+    return await modal.present();
   }
 
   // Obtener gastos desde Firebase
@@ -82,6 +78,4 @@ export class HomePage implements OnInit {
       });
     }
   }
-
-
 }

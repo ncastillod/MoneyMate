@@ -9,6 +9,7 @@ import { DocumentData } from '@angular/fire/firestore';
 
 import { Gasto } from '../models/gastos.model';
 import { Observable } from 'rxjs';
+import { Ingreso } from '../models/ingresos.model';
 
 
 @Injectable({
@@ -27,6 +28,9 @@ export class FirebaseService {
    getIngresos(userUid: string): Observable<DocumentData[]> {
     const path = `users/${userUid}/ingresos`;
     return this.getCollectionData(path);
+  }
+  obtenerIngresos(): Observable<any[]> {
+    return this.firestore.collection('ingresos').valueChanges();
   }
 
 

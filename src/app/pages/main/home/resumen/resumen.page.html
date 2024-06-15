@@ -1,18 +1,15 @@
 <app-header title="Resumen de Gastos Mensual" backButton="/main/home"></app-header>
 <ion-content>
   <!-- Título con la suma de todos los gastos del mes actual -->
-  
   <ion-card>
     <ion-card-header>
       <ion-card-title>Total de gastos del mes actual</ion-card-title>
       <ion-card-subtitle>Gastos mes anterior: {{ totalGastosMesAnterior | currency: 'CLP' }}</ion-card-subtitle>
-      <ion-card-content>
-        <h1>{{ totalGastosMes | currency: 'CLP' }}</h1>
-      </ion-card-content>
     </ion-card-header>
+    <ion-card-content>
+      <h1>{{ totalGastosMes | currency: 'CLP' }}</h1>
+    </ion-card-content>
   </ion-card>
-  
-
 
   <ion-card>
     <ion-card-header>
@@ -27,35 +24,44 @@
     </ion-card-content>
   </ion-card>
 
-   
+  <!-- Lista de gastos detallados dentro de un desplegable -->
+  <ion-card>
+    <ion-card-header (click)="toggleDetails()">
+      <ion-card-title>Detalles de gastos</ion-card-title>
+      <ion-card-subtitle>
+        <ion-icon name="chevron-down-outline" slot="end" *ngIf="!showDetails"></ion-icon>
+        <ion-icon name="chevron-up-outline" slot="end" *ngIf="showDetails"></ion-icon>
+      </ion-card-subtitle>
+    </ion-card-header>
+    <ion-card-content *ngIf="showDetails">
+      <ion-list>
+        <ion-item-sliding class="product-item" *ngFor="let p of resumen">
+          <ion-item lines="none">
+            <ion-label class="ion-text-wrap">
+              <div class="name">{{ p.descripcion }}</div>
+              <div class="data">
+                <strong>Mes: </strong> {{ getMonth(p.fecha) }}
+              </div>
+              <div class="data">
+                <strong>Tipo: </strong> {{ p.categoria }}
+              </div>
+            </ion-label>
+            <div slot="end" class="total-monto">
+              <strong>Total: </strong> {{ p.monto | currency: 'CLP' }}
+            </div>
+          </ion-item>
 
-  <!-- Lista de gastos detallados -->
-  <ion-list>
-    <ion-item-sliding class="product-item" *ngFor="let p of resumen">
-      <ion-item lines="none">
-        <ion-label class="ion-text-wrap">
-          <div class="name">{{p.descripcion}}</div>
-          <div class="data">
-            <strong>Mes: </strong> {{ getMonth(p.fecha) }}
-          </div>
-          <div class="data">
-            <strong>Tipo: </strong> {{p.categoria}}
-          </div>
-        </ion-label>
-        <div slot="end" class="total-monto">
-          <strong>Total: </strong> {{p.monto | currency: 'CLP'}}
-        </div>
-      </ion-item>
+          <ion-item-options>
+            <ion-item-option>
+              <ion-icon class="option-btn" name="create-outline"></ion-icon>
+            </ion-item-option>
+            <ion-item-option color="danger">
+              <ion-icon class="option-btn" name="trash-outline"></ion-icon>
+            </ion-item-option>
+          </ion-item-options>
+        </ion-item-sliding>
+      </ion-list>
+    </ion-card-content>
+  </ion-card>
 
-      <ion-item-options>
-        <ion-item-option>
-          <ion-icon class="option-btn" name="create-outline"></ion-icon>
-        </ion-item-option>
-  
-        <ion-item-option color="danger">
-          <ion-icon class="option-btn" name="trash-outline"></ion-icon>
-        </ion-item-option>
-      </ion-item-options>
-    </ion-item-sliding>
-  </ion-list>
 </ion-content>

@@ -1,0 +1,8 @@
+<h3>Total Gastos: {{ totalGastos | currency }}</h3>
+<h3>Total Ingresos: {{ totalIngresos | currency }}</h3>
+<ngx-apex-charts
+  [series]="chartOptions.series"
+  [chart]="chartOptions.chart"
+  [labels]="chartOptions.labels"
+  [responsive]="chartOptions.responsive">
+</ngx-apex-charts>

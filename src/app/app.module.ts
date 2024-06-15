@@ -14,6 +14,8 @@ import { AngularFireModule } from '@angular/fire/compat';
 import { environment } from 'src/environments/environment';
 import { SharedModule } from './shared/shared.module';
 
+// Ng-ApexCharts
+import { NgApexchartsModule } from 'ng-apexcharts';
 
 //======== Firebase ================
 
@@ -24,7 +26,7 @@ import { SharedModule } from './shared/shared.module';
     IonicModule.forRoot({mode: 'md'}),
     AppRoutingModule,
     AngularFireModule.initializeApp(environment.firebaseConfig),
-    SharedModule
+    SharedModule,  NgApexchartsModule
   ],
   providers: [{ provide: RouteReuseStrategy, useClass: IonicRouteStrategy }],
   bootstrap: [AppComponent],

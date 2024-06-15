@@ -10,6 +10,18 @@ import { Gasto } from 'src/app/models/gastos.model';
   styleUrls: ['./resumen.page.scss'],
 })
 export class ResumenPage implements OnInit {
+  showDetails: boolean = false;// Definición de showDetails
+  toggleDetails() {
+    this.showDetails = !this.showDetails;
+  }
+
+  showDetailsPanel() {
+    this.showDetails = true;
+  }
+
+  hideDetailsPanel() {
+    this.showDetails = false;
+  }
 
   firebaseSvc = inject(FirebaseService);
   utilsSvc = inject(UtilsService);
@@ -33,6 +45,7 @@ export class ResumenPage implements OnInit {
 
   ngOnInit() {
     this.getGastos();
+    this.showDetails = false;
   }
 
   user(): User {
