@@ -3,7 +3,7 @@
 <ion-content>
   <div>
     <ion-fab vertical="bottom" horizontal="end" slot="fixed">
-      <ion-fab-button>
+      <ion-fab-button (click)="addGasto()">
         <ion-icon name="add"></ion-icon>
       </ion-fab-button>
     </ion-fab>
@@ -33,7 +33,7 @@
 
     <ion-row>
       <ion-col size="12">
-        <ion-button expand="block" color="warning">Añadir un Gasto</ion-button>
+        <ion-button routerLink="gastos" expand="block" color="warning">Añadir un Gasto</ion-button>
       </ion-col>
     </ion-row>
 

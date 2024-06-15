@@ -1,3 +1,51 @@
-<p>
-  add-update-gasto works!
-</p>
+<app-header [isModal]="true" title="Añadir Gasto"></app-header>
+<ion-content>
+    <form [formGroup]="form" class="ion-padding ion-text-center" (ngSubmit)="submit()" (keypress.enter)="submit()">
+        <!--=================== Descripcion =======================-->
+        <app-custom-input 
+            autocomplete="descripcion" 
+            icon="journal"
+            [control]="form.controls.descripcion"
+            type="text"
+            label="Descripcion"
+        ></app-custom-input>
+
+        <div class="validators" *ngIf="form.controls.descripcion.errors && form.controls.descripcion.touched">
+            <div *ngIf="form.controls.descripcion.errors?.['required']">Este campo es requerido</div>
+            <div *ngIf="form.controls.descripcion.errors?.['minlength']">El campo debe tener al menos 3 caracteres</div>
+        </div>
+
+        <!--=================== Categoría =======================-->
+        <ion-item>
+            <ion-select formControlName="categoria" label="Categoría" label-placement="floating">
+                <ion-select-option value="vivienda">Vivienda</ion-select-option>
+                <ion-select-option value="alimentacion">Alimentacion</ion-select-option>
+                <ion-select-option value="servicios">Servicios</ion-select-option>
+                <ion-select-option value="transporte">Transporte</ion-select-option>
+                <ion-select-option value="otros">Otros</ion-select-option>
+            </ion-select>
+        </ion-item>
+
+        <div class="validators" *ngIf="form.controls.categoria.errors && form.controls.categoria.touched">
+            <div *ngIf="form.controls.categoria.errors?.['required']">Ingrese una Categoría</div>
+        </div>
+
+        <!--=================== Monto =======================-->
+        <app-custom-input 
+            icon="logo-usd"
+            [control]="form.controls.monto"
+            type="number"
+            label="Monto"
+        ></app-custom-input>
+
+        <div class="validators" *ngIf="form.controls.monto.errors && form.controls.monto.touched">
+            <div *ngIf="form.controls.monto.errors?.['required']">El correo es requerido</div>
+            <div *ngIf="form.controls.monto.errors?.['min']">El monto debe ser mayor o igual a 0</div>
+        </div>
+
+        <ion-button class="ion-margin" mode="md" type="submit" [disabled]="form.invalid">
+            Agregar Gasto
+            <ion-icon slot="end" name="checkmark-circle-outline"></ion-icon>
+        </ion-button>
+    </form>
+</ion-content>

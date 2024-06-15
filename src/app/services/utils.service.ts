@@ -49,6 +49,11 @@ export class UtilsService {
     await modal.present();
 
     const { data } = await modal.onWillDismiss();
-  
+    if(data) return data;  
+  }
+
+
+  dismissModal(data?: any) {
+    return this.modalCtrl.dismiss(data);
   }
 }

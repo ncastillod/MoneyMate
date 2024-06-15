@@ -3,6 +3,7 @@ export interface Gasto {
     descripcion: string;
     categoria: string;
     monto: number;
-    fecha: Date;
+    fecha: string;
+
   }
   

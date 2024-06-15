@@ -3,7 +3,7 @@ import { AngularFireAuth } from '@angular/fire/compat/auth';
 import { getAuth, signInWithEmailAndPassword, createUserWithEmailAndPassword, updateProfile, sendPasswordResetEmail } from 'firebase/auth';
 import { User } from '../models/user.model';
 import { AngularFirestore } from '@angular/fire/compat/firestore';
-import { getFirestore, setDoc, doc, getDoc } from '@angular/fire/firestore';
+import { getFirestore, setDoc, doc, getDoc, addDoc, collection } from '@angular/fire/firestore';
 import { UtilsService } from './utils.service';
 
 import { Gasto } from '../models/gastos.model';
@@ -18,6 +18,8 @@ export class FirebaseService {
   auth = inject(AngularFireAuth);
   firestore = inject(AngularFirestore);
   utilsSvc = inject(UtilsService);
+  
+
   private gastosCollection = this.firestore.collection<Gasto>('gastos');
   
 
@@ -36,14 +38,11 @@ export class FirebaseService {
   }
 
 
-
-
   //================== Autenticación ===================
 
   getAuth() {
     return getAuth();
   }
-
 
 
   //========== Acceder ===========
@@ -86,8 +85,21 @@ export class FirebaseService {
 
   //===== Recibir un documento ==========
 
-
   async getDocument(path: string) {
     return (await getDoc (doc(getFirestore(), path))).data();
   }
+
+
+  //===== Añadir un documento ==========
+  addDocument(path: string, data: any) {
+    return addDoc(collection(getFirestore(), path), data);
+  }
+
+
+
+
+  //========================== Almacenamiento ==================
+
+  
+
 }

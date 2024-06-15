@@ -5,6 +5,10 @@
       <ion-back-button *ngIf="backButton" [defaultHref]="backButton"></ion-back-button>
     </ion-buttons>
 
+    <ion-button slot="end" (click)="dismissModal()" *ngIf="isModal" color="dark">
+      <ion-icon name="close-circle-outline"></ion-icon>
+    </ion-button>
+
     <ion-title>
       <strong>{{ title }}</strong>
       <!--
