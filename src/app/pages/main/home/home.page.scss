@@ -37,3 +37,11 @@ h1 {
       color: #f3f4f5;
     }
   }
+  ion-content {
+    --background: #eeeeee; // Color de fondo gris claro
+  }
+  ion-card {
+    --background: #fff; // Fondo blanco para las tarjetas para contrastar con el fondo de la página
+    --color: #000; // Texto negro
+    margin: 8px; // Un poco de margen entre las tarjetas
+  }

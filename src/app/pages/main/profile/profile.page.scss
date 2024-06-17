@@ -15,3 +15,50 @@ h1 {
     margin-top: 30px;
     margin-bottom: 10px;
   }
+  h1 {
+    margin-bottom: 10px;
+  }
+  .subtitle {
+    color: gray;
+    margin-bottom: 20px;
+  }
+  button {
+    margin: 5px;
+    padding: 10px 20px;
+    font-size: 16px;
+    cursor: pointer;
+  }
+  h2 {
+    margin-top: 30px;
+    margin-bottom: 10px;
+  }
+  .preset-title {
+    margin-top: 20px;
+  }
+  
+  .presupuesto-card {
+    --background: #000000;
+    --color: #afa9a9;
+    border-radius: 8px;
+    box-shadow: 0 2px 4px rgba(180, 19, 19, 0.1);
+    padding: 16px;
+    text-align: center;
+  
+    ion-card-title {
+      font-size: 1.4em;
+      font-weight: bold;
+    }
+  
+    ion-card-content {
+      font-size: 1.2em;
+      color: #f3f4f5;
+    }
+  }
+  ion-content {
+    --background: #eeeeee; // Color de fondo gris claro
+  }
+  ion-card {
+    --background: #fff; // Fondo blanco para las tarjetas para contrastar con el fondo de la página
+    --color: #000; // Texto negro
+    margin: 8px; // Un poco de margen entre las tarjetas
+  }
