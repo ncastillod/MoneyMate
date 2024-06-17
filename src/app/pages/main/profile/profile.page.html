@@ -43,6 +43,29 @@
 
   </form>
 
+  <form  [formGroup]="form" class="ion-padding ion-text-center">
+
+
+    <app-custom-input 
+            icon="cash-outline"
+            [control]="form.controls.monto"
+            type="number"
+            label="Meta de Ahorro"
+        ></app-custom-input>
+
+        <div class="validators" *ngIf="form.controls.monto.errors && form.controls.monto.touched">
+            <div *ngIf="form.controls.monto.errors?.['required']">El monto es requerido</div>
+            <div *ngIf="form.controls.monto.errors?.['min']">El monto debe ser mayor a 0</div>
+        </div>
+
+        <ion-button class="ion-margin" mode="md" type="submit" color="dark" routerLink="/main/home" [disabled]="form.invalid">
+            Agregar Meta de Ahorro
+            <ion-icon slot="end" name="checkmark-circle-outline"></ion-icon>
+        </ion-button>
+
+
+  </form>
+
 
 
 
