@@ -15,3 +15,25 @@ h1 {
     margin-top: 30px;
     margin-bottom: 10px;
   }
+  .preset-title {
+    margin-top: 20px;
+  }
+  
+  .presupuesto-card {
+    --background: #000000;
+    --color: #afa9a9;
+    border-radius: 8px;
+    box-shadow: 0 2px 4px rgba(180, 19, 19, 0.1);
+    padding: 16px;
+    text-align: center;
+  
+    ion-card-title {
+      font-size: 1.4em;
+      font-weight: bold;
+    }
+  
+    ion-card-content {
+      font-size: 1.2em;
+      color: #f3f4f5;
+    }
+  }

@@ -19,7 +19,14 @@
   <ion-grid>
     <ion-row class="ion-justify-content-center">
       <ion-col size="12" class="ion-text-center">
-        <p>Presupuesto: {{ presupuesto | currency }}</p>
+        <ion-card class="presupuesto-card">
+          <ion-card-header>
+            <ion-card-title style="color: rgb(255, 255, 255);">Presupuesto</ion-card-title>
+          </ion-card-header>
+          <ion-card-content>
+            {{ presupuesto | currency }}
+          </ion-card-content>
+        </ion-card>
       </ion-col>
     </ion-row>
 
