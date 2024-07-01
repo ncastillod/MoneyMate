@@ -24,7 +24,7 @@ export class FirebaseService {
 
   private gastosCollection = this.firestore.collection<Gasto>('gastos');
   
-   // Método para obtener ingresos
+   //=========== Leer Ingresos ==============
    getIngresos(userUid: string): Observable<DocumentData[]> {
     const path = `users/${userUid}/ingresos`;
     return this.getCollectionData(path);
@@ -33,6 +33,25 @@ export class FirebaseService {
     return this.firestore.collection('ingresos').valueChanges();
   }
 
+
+  //=========== Leer Ingreso Fijo ==============
+  getIngFijo(userUid: string): Observable<DocumentData[]> {
+    const path = `users/${userUid}/ing_fijo`;
+    return this.getCollectionData(path);
+  }
+  obtenerIngFijo(): Observable<any[]> {
+    return this.firestore.collection('ing_fijo').valueChanges();
+  }
+
+
+  //=========== Leer Meta Ahorro ==============
+  getMeta(userUid: string): Observable<DocumentData[]> {
+    const path = `users/${userUid}/meta`;
+    return this.getCollectionData(path);
+  }
+  obtenerMeta(): Observable<any[]> {
+    return this.firestore.collection('meta').valueChanges();
+  }
 
 
   //=========== Agregar Gasto ==============

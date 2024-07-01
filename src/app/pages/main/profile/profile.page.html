@@ -35,30 +35,30 @@
             <div *ngIf="form.controls.monto.errors?.['min']">El monto debe ser mayor a 0</div>
         </div>
 
-        <ion-button class="ion-margin" mode="md" type="submit" color="dark" routerLink="/main/home" [disabled]="form.invalid">
-            Agregar Gasto
-            <ion-icon slot="end" name="checkmark-circle-outline"></ion-icon>
-        </ion-button>
+        <ion-button class="ion-margin" mode="md" type="submit" color="dark" [disabled]="form.invalid">
+          Actualizar
+          <ion-icon slot="end" name="checkmark-circle-outline"></ion-icon>
+      </ion-button>
 
 
   </form>
 
-  <form  [formGroup]="form" class="ion-padding ion-text-center">
+  <form  [formGroup]="formMeta" class="ion-padding ion-text-center" (ngSubmit)="submitMeta()" (keypress.enter)="submitMeta()">
 
 
     <app-custom-input 
             icon="cash-outline"
-            [control]="form.controls.monto"
+            [control]="formMeta.controls.monto"
             type="number"
             label="Meta de Ahorro"
         ></app-custom-input>
 
-        <div class="validators" *ngIf="form.controls.monto.errors && form.controls.monto.touched">
-            <div *ngIf="form.controls.monto.errors?.['required']">El monto es requerido</div>
-            <div *ngIf="form.controls.monto.errors?.['min']">El monto debe ser mayor a 0</div>
+        <div class="validators" *ngIf="formMeta.controls.monto.errors && formMeta.controls.monto.touched">
+            <div *ngIf="formMeta.controls.monto.errors?.['required']">El monto es requerido</div>
+            <div *ngIf="formMeta.controls.monto.errors?.['min']">El monto debe ser mayor a 0</div>
         </div>
 
-        <ion-button class="ion-margin" mode="md" type="submit" color="dark" routerLink="/main/home" [disabled]="form.invalid">
+        <ion-button class="ion-margin" mode="md" type="submit" color="dark" [disabled]="formMeta.invalid">
             Agregar Meta de Ahorro
             <ion-icon slot="end" name="checkmark-circle-outline"></ion-icon>
         </ion-button>

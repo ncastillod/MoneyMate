@@ -17,9 +17,7 @@ export class IngresosPage implements OnInit {
   form = new FormGroup({
     tipo: new FormControl('', [Validators.required]),
     monto: new FormControl('', [Validators.required, Validators.min(0)]),
-    fecha: new FormControl(new Date().toISOString().substring(0, 10), [Validators.required]),
-
-    
+    fecha: new FormControl(new Date().toISOString(), [Validators.required]),
   });
 
   user: User;
@@ -32,7 +30,7 @@ export class IngresosPage implements OnInit {
   ngOnInit() {
     this.user = this.utilsSvc.getFromLocalStorage('user') as User;
 
-    this.form.controls.fecha.setValue(new Date().toISOString().substring(0, 10));
+    this.form.controls.fecha.setValue(new Date().toISOString());
     this.form.controls.tipo.setValue('extra');
   }
 

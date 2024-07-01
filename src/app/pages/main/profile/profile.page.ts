@@ -1,7 +1,7 @@
 import { Component, OnInit, Input } from '@angular/core';
 import { FormControl, FormGroup, Validators } from '@angular/forms';
-import { Ingreso } from 'src/app/models/ingresos.model';
 import { User } from 'src/app/models/user.model';
+import { Ing_fijo, MetaAhorro } from 'src/app/models/config.model';
 import { FirebaseService } from 'src/app/services/firebase.service';
 import { UtilsService } from 'src/app/services/utils.service';
 
@@ -15,19 +15,27 @@ export class ProfilePage implements OnInit {
   @Input() control: FormControl;
 
 
-  ingresoFijo: number = 0;
+  ingresoFijo: number;
+  MetaAhorro: number;
+  id: string = '0';
+  id1: string = '1';
 
 
   form = new FormGroup({
-    tipo: new FormControl('', [Validators.required]),
+    
     monto: new FormControl('', [Validators.required, Validators.min(0)]),
-    fecha: new FormControl(new Date().toISOString().substring(0, 10), [Validators.required]),
+    fecha: new FormControl(new Date().toISOString(), [Validators.required]),
+  });
 
-
+  formMeta = new FormGroup({
+    
+    monto: new FormControl('', [Validators.required, Validators.min(0)]),
+    fecha: new FormControl(new Date().toISOString(), [Validators.required]),
   });
 
   user: User;
-  ingreso: Ingreso;
+  ingreso: Ing_fijo;
+  meta: MetaAhorro;
 
   constructor(
     private firebaseSvc: FirebaseService,
@@ -37,8 +45,9 @@ export class ProfilePage implements OnInit {
   ngOnInit() {
     this.user = this.utilsSvc.getFromLocalStorage('user') as User;
 
-    
-    this.form.controls.fecha.setValue(new Date().toISOString().substring(0, 10));
+
+    this.form.controls.fecha.setValue(new Date().toISOString());
+    this.formMeta.controls.fecha.setValue(new Date().toISOString());
   }
 
 
@@ -48,71 +57,143 @@ export class ProfilePage implements OnInit {
       else this.addIngreso();
     }
   }
+  async submitMeta() {
+    if (this.formMeta.valid) {
+      if (this.meta) this.updateMeta();
+      else this.addMeta();
+    }
+  }
 
 
 
   async addIngreso() {
 
-      let path = `users/${this.user.uid}/ingresos`;
+    let path = `users/${this.user.uid}/ing_fijo`;
 
-      const loading = await this.utilsSvc.loading();
-      await loading.present();
+    const loading = await this.utilsSvc.loading();
+    await loading.present();
 
-      this.firebaseSvc.addDocument(path, this.form.value).then(async res => {
-        this.utilsSvc.dismissModal({ success: true });
+    this.firebaseSvc.addDocument(path, this.form.value).then(async res => {
+      this.utilsSvc.dismissModal({ success: true });
 
-        this.utilsSvc.presentToast({
-          message: 'Ingreso fijo actualizado',
-          duration: 1500,
-          color: 'success',
-          position: 'middle',
-          icon: 'checkmark-circle-outline'
-        });
-      }).catch(error => {
-        console.log(error);
-
-        this.utilsSvc.presentToast({
-          message: error.message,
-          duration: 2500,
-          color: 'primary',
-          position: 'middle',
-          icon: 'alert-circle-outline'
-        });
-      }).finally(() => {
-        loading.dismiss();
+      this.utilsSvc.presentToast({
+        message: 'Ingreso fijo establecido',
+        duration: 1500,
+        color: 'success',
+        position: 'middle',
+        icon: 'checkmark-circle-outline'
       });
-    }
-  
+    }).catch(error => {
+      console.log(error);
+
+      this.utilsSvc.presentToast({
+        message: error.message,
+        duration: 2500,
+        color: 'primary',
+        position: 'middle',
+        icon: 'alert-circle-outline'
+      });
+    }).finally(() => {
+      loading.dismiss();
+    });
+  }
+
 
   async updateIngreso() {
 
-      let path = `users/${this.user.uid}/ingresos`;
+    let path = `users/${this.user.uid}/ing_fijo`;
 
-      const loading = await this.utilsSvc.loading();
-      await loading.present();
+    const loading = await this.utilsSvc.loading();
+    await loading.present();
 
-      this.firebaseSvc.addDocument(path, this.form.value).then(async res => {
-        this.utilsSvc.dismissModal({ success: true });
+    this.firebaseSvc.setDocument(path, this.form.value).then(async res => {
+      this.utilsSvc.dismissModal({ success: true });
 
-        this.utilsSvc.presentToast({
-          message: 'Ingreso añadido',
-          duration: 1500,
-          color: 'success',
-          position: 'middle',
-          icon: 'checkmark-circle-outline'
-        });
-      }).catch(error => {
-        console.log(error);
-
-        this.utilsSvc.presentToast({
-          message: error.message,
-          duration: 2500,
-          color: 'primary',
-          position: 'middle',
-          icon: 'alert-circle-outline'
-        });
-      }).finally(() => {
-        loading.dismiss();
+      this.utilsSvc.presentToast({
+        message: 'Ingreso fijo actualizado',
+        duration: 1500,
+        color: 'success',
+        position: 'middle',
+        icon: 'checkmark-circle-outline'
       });
-    }
+    }).catch(error => {
+      console.log(error);
+
+      this.utilsSvc.presentToast({
+        message: error.message,
+        duration: 2500,
+        color: 'primary',
+        position: 'middle',
+        icon: 'alert-circle-outline'
+      });
+    }).finally(() => {
+      loading.dismiss();
+    });
+  }
+
+
+  async addMeta() {
+
+    let path = `users/${this.user.uid}/meta`;
+
+    const loading = await this.utilsSvc.loading();
+    await loading.present();
+
+    this.firebaseSvc.addDocument(path, this.formMeta.value).then(async res => {
+      this.utilsSvc.dismissModal({ success: true });
+
+      this.utilsSvc.presentToast({
+        message: 'Meta establecida',
+        duration: 1500,
+        color: 'success',
+        position: 'middle',
+        icon: 'checkmark-circle-outline'
+      });
+    }).catch(error => {
+      console.log(error);
+
+      this.utilsSvc.presentToast({
+        message: error.message,
+        duration: 2500,
+        color: 'primary',
+        position: 'middle',
+        icon: 'alert-circle-outline'
+      });
+    }).finally(() => {
+      loading.dismiss();
+    });
+  }
+
+
+  async updateMeta() {
+
+    let path = `users/${this.user.uid}/meta`;
+
+    const loading = await this.utilsSvc.loading();
+    await loading.present();
+
+    this.firebaseSvc.setDocument(path, this.formMeta.value).then(async res => {
+      this.utilsSvc.dismissModal({ success: true });
+
+      this.utilsSvc.presentToast({
+        message: 'Meta Actualizada',
+        duration: 1500,
+        color: 'success',
+        position: 'middle',
+        icon: 'checkmark-circle-outline'
+      });
+    }).catch(error => {
+      console.log(error);
+
+      this.utilsSvc.presentToast({
+        message: error.message,
+        duration: 2500,
+        color: 'primary',
+        position: 'middle',
+        icon: 'alert-circle-outline'
+      });
+    }).finally(() => {
+      loading.dismiss();
+    });
+  }
 }

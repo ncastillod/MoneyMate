@@ -14,7 +14,11 @@ import { ModalController } from '@ionic/angular';
 export class HomePage implements OnInit {
   totalGastosMes: number = 0;
   ingresos: any[] = [];
+  ingfijo: any[] = [];
+  meta: any[] = [];
   presupuesto: number = 0;
+  ingfijofinal: number = 0;
+  metafinal: number = 0;
 
   constructor(
     private firebaseSvc: FirebaseService,
@@ -25,22 +29,88 @@ export class HomePage implements OnInit {
 
   ngOnInit() {
     this.getGastos();
+    this.getMeta();
+    this.getIngresoFijo();
     this.getIngresos();
+    
+    
   }
 
   // Obtener ingresos desde Firebase
   getIngresos() {
     const user = this.utilsSvc.getFromLocalStorage('user');
+    
     if (user) {
       this.firebaseSvc.getIngresos(user.uid).subscribe({
         next: (res: any[]) => {
-          console.log(res);
           this.ingresos = res;
-          this.presupuesto = res.reduce((acc, ingreso) => acc + Number(ingreso.monto), 0);
+          this.presupuesto = res.reduce((acc, ingreso) => acc + Number(ingreso.monto), 0) + this.ingfijofinal;
+        },
+        error: (err) => {
+          console.error('Error fetching ingresos:', err);
         }
       });
     }
   }
+  
+  
+  // Obtener ingresos desde Firebase
+  getIngresoFijo() {
+    const user = this.utilsSvc.getFromLocalStorage('user');
+    if (user) {
+      this.firebaseSvc.getIngFijo(user.uid).subscribe({
+        next: (res: any[]) => {
+          console.log(res);
+          this.ingfijo = res;
+  
+          if (this.ingfijo.length > 0) {
+            // Ordenar la lista por fecha en orden descendente
+            this.ingfijo.sort((a, b) => new Date(b.fecha).getTime() - new Date(a.fecha).getTime());
+  
+            // Asignar a ingfijofinal el monto del elemento más reciente
+            this.ingfijofinal = Number(this.ingfijo[0].monto);
+          } else {
+            this.ingfijofinal = 0; // Asignar un valor predeterminado si la lista está vacía
+          }
+          console.log(this.ingfijofinal);
+        },
+        error: (err) => {
+          console.error('Error fetching ingreso fijo:', err);
+        }
+      });
+    }
+  }
+  
+
+  // Obtener Meta desde Firebase
+  getMeta() {
+    const user = this.utilsSvc.getFromLocalStorage('user');
+    if (user) {
+      this.firebaseSvc.getMeta(user.uid).subscribe({
+        next: (res: any[]) => {
+          console.log(res);
+          this.meta = res;
+  
+          if (this.meta.length > 0) {
+            // Ordenar la lista por fecha en orden descendente
+            this.meta.sort((a, b) => new Date(b.fecha).getTime() - new Date(a.fecha).getTime());
+            
+            // Asignar a ingfijofinal el monto del elemento más reciente
+            this.metafinal = Number(this.meta[0].monto);
+            console.log(this.metafinal);
+          } else {
+            this.metafinal = 0; // Asignar un valor predeterminado si la lista está vacía
+          }
+          console.log(this.metafinal);
+        },
+        error: (err) => {
+          console.error('Error fetching ingreso fijo:', err);
+        }
+      });
+    }
+  }
+  
+  
 
   // Cerrar Sesión
   signOut() {
